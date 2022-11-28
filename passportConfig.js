@@ -5,10 +5,10 @@ const bcrypt = require("bcrypt");
 function initialize(passport) {
   console.log("Initialized");
 
-  const authenticateUser = (email, password, done) => {
-    console.log(email, password);
+  const authenticateUser = (user, password, done) => {
+    console.log(user, password);
     pool.query(
-      `SELECT * FROM users WHERE email = $1`,
+      `SELECT * FROM iser WHERE username = 1234`,
       [email],
       (err, results) => {
         if (err) {
@@ -42,7 +42,7 @@ function initialize(passport) {
 
   passport.use(
     new LocalStrategy(
-      { usernameField: "email", passwordField: "password" },
+      { usernameField: "user", passwordField: "password" },
       authenticateUser
     )
   );
@@ -56,7 +56,7 @@ function initialize(passport) {
   // The fetched object is attached to the request object as req.user
 
   passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM users WHERE id = $1`, [id], (err, results) => {
+    pool.query(`SELECT * FROM iser WHERE username = 1234`, [id], (err, results) => {
       if (err) {
         return done(err);
       }
